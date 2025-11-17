@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+}
+
+model PersonalNotice {
+  id              Int      @id @default(autoincrement())
+  date            DateTime
+  employee_id     String
+  name            String
+  category        Int
+  before_change   String?
+  after_change    String?
+  note            String?
+  delete_flag     Boolean  @default(false)
+  registration_date DateTime
+  last_updated    DateTime
+}
