@@ -45,8 +45,15 @@ export default function PersonalNoticePage() {
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value, type, checked } = e.target;
-        setFilters({ ...filters, [name]: type === "checkbox" ? checked : value });
+        const { name, value, type } = e.target;
+
+        // チェックボックスの場合は checked を使用
+        let val: string | boolean = value;
+        if (type === "checkbox" && "checked" in e.target) {
+            val = e.target.checked;
+        }
+
+        setFilters({ ...filters, [name]: val });
     };
 
 
@@ -71,7 +78,7 @@ export default function PersonalNoticePage() {
     };
 
 
-    const kinds = {
+    const kinds : Record<number, string>= {
         1: '新卒入社',
         2: '中途入社',
         3: '昇格',
@@ -213,7 +220,7 @@ export default function PersonalNoticePage() {
                 {/* ボタン */}
                 <div className="mt-4 flex flex-wrap gap-2">
                     <button
-                        onClick={fetchData}
+                        onClick={() => fetchData()}
                         className="bg-blue-500 text-white px-4 py-1 rounded cursor-pointer hover:bg-blue-600"
                     >
                         検索
@@ -290,7 +297,7 @@ export default function PersonalNoticePage() {
                             <td className="border p-2 text-center">{n.date?.slice(0, 10)}</td>
                             <td className="border p-2 text-center">{n.employee_id.toString().padStart(4, "0")}</td>
                             <td className="border p-2 text-left">{n.name}</td>
-                            <td className="border p-2 text-left">{kinds[n.category] ?? ''}</td>
+                            <td className="border p-2 text-left">{kinds[n.category as number] ?? ''}</td>
                             <td className="border p-2 text-left break-words">{n.before_change}</td>
                             <td className="border p-2 text-left break-words">{n.after_change}</td>
                             <td className="border p-2 text-left break-words">{n.note}</td>

@@ -63,9 +63,9 @@ export default function PersonalNoticeNewPage() {
         switch (formData.category) {
             case "1": // 新卒入社
             case "2": // 中途入社
-                return "所属部署";
+                return "例：)所属部署";
             case "3": // 昇格
-                return "新役職名";
+                return "例：)新役職名";
             default:
                 return "";
         }

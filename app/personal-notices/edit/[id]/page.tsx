@@ -45,8 +45,14 @@ export default function EditPage() {
     }, [hoge, url]); // 修正: params.id → hoge
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value, type, checked } = e.target;
-        setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+        const { name, value, type } = e.target;
+
+        // チェックボックスの場合は checked を使用
+        let val: string | boolean = value;
+        if (type === "checkbox" && "checked" in e.target) {
+            val = e.target.checked;
+        }
+        setForm({ ...form, [name]: val });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
