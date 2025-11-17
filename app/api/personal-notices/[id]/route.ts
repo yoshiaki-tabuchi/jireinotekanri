@@ -54,7 +54,10 @@ export async function PATCH(req: NextRequest, context: any) {
 
         const updatedNotice = await prisma.personalNotice.update({
             where: { id },
-            data: body,
+            data: {
+                ...body,
+                last_updated: new Date()
+            }, // ←ここで更新日時を設定
         });
 
         console.log("Updated notice:", updatedNotice);

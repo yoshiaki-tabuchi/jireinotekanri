@@ -78,7 +78,7 @@ export default function PersonalNoticePage() {
     };
 
 
-    const kinds : Record<number, string>= {
+    const kinds: Record<number, string> = {
         1: '新卒入社',
         2: '中途入社',
         3: '昇格',
@@ -313,17 +313,20 @@ export default function PersonalNoticePage() {
                                 </button>
                             </td>
 
-                            {/* 削除ボタン */}
+                            {/* 削除ボタン / 削除済み表示 */}
                             <td className="text-center">
-                                <button
-                                    onClick={() => handleDelete(n.id)}
-                                    className="border text-red-500 hover:text-red-700 cursor-pointer p-1 w-6"
-                                    title="削除"
-                                >
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </button>
+                                {n.delete_flag ? (
+                                    <span className="text-gray-500 font-medium">削除済み</span>
+                                ) : (
+                                    <button
+                                        onClick={() => handleDelete(n.id)}
+                                        className="border text-red-500 hover:text-red-700 cursor-pointer p-1 w-6"
+                                        title="削除"
+                                    >
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </button>
+                                )}
                             </td>
-
 
                         </tr>
                     ))}
