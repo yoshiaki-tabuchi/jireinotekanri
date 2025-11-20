@@ -78,22 +78,22 @@ export default function EditPage() {
 
     return (
         <div className="p-8 max-w-xl mx-auto">
-            <h2 className="text-2xl mb-4">辞令ノート 編集</h2>
+            <h2 className="text-2xl mb-4">辞令ノート 編集画面</h2>
             <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
-                    <label>日付</label>
+                    <label>日付(※)</label>
                     <input type="date" name="date" value={formatDateForInput(form.date) || ""} onChange={handleChange} className="border p-1 w-full" />
                 </div>
                 <div>
-                    <label>社員番号</label>
+                    <label>社員番号(※)</label>
                     <input type="text" name="employee_id" value={form.employee_id || ""} onChange={handleChange} className="border p-1 w-full" />
                 </div>
                 <div>
-                    <label>氏名</label>
+                    <label>氏名(※)</label>
                     <input type="text" name="name" value={form.name || ""} onChange={handleChange} className="border p-1 w-full" />
                 </div>
                 <div>
-                    <label>種類</label>
+                    <label>種類(※)</label>
                     <select name="category" value={form.category || ""} onChange={handleChange} className="border p-1 w-full">
                         <option value="">選択</option>
                         <option value="1">新卒入社</option>
@@ -107,11 +107,11 @@ export default function EditPage() {
                     </select>
                 </div>
                 <div>
-                    <label>変更前</label>
+                    <label>変更前(前役職名や前部署名などを入力)</label>
                     <input type="text" name="before_change" value={form.before_change || ""} onChange={handleChange} className="border p-1 w-full" />
                 </div>
                 <div>
-                    <label>変更後</label>
+                    <label>変更後(現役職名や現部署名などを入力</label>
                     <input type="text" name="after_change" value={form.after_change || ""} onChange={handleChange} className="border p-1 w-full" />
                 </div>
                 <div>
