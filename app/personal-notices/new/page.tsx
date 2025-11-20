@@ -77,7 +77,7 @@ export default function PersonalNoticeNewPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4 max-w-lg">
                 <div>
-                    <label className="block mb-1">日付</label>
+                    <label className="block mb-1">日付(※)</label>
                     <input
                         type="date"
                         name="date"
@@ -89,7 +89,7 @@ export default function PersonalNoticeNewPage() {
                 </div>
 
                 <div>
-                    <label className="block mb-1">社員番号</label>
+                    <label className="block mb-1">社員番号(※)</label>
                     <input
                         type="text"
                         name="employee_id"
@@ -102,7 +102,7 @@ export default function PersonalNoticeNewPage() {
                 </div>
 
                 <div>
-                    <label className="block mb-1">氏名</label>
+                    <label className="block mb-1">氏名(※)</label>
                     <input
                         type="text"
                         name="name"
@@ -114,7 +114,7 @@ export default function PersonalNoticeNewPage() {
                 </div>
 
                 <div>
-                    <label className="block mb-1">種類</label>
+                    <label className="block mb-1">種類(※)</label>
                     <select
                         name="category"
                         value={formData.category}
@@ -132,7 +132,7 @@ export default function PersonalNoticeNewPage() {
                 </div>
 
                 <div>
-                    <label className="block mb-1">変更前</label>
+                    <label className="block mb-1">変更前(前役職名や前部署名などを入力)</label>
                     <input
                         type="text"
                         name="before_change"
@@ -143,7 +143,7 @@ export default function PersonalNoticeNewPage() {
                 </div>
 
                 <div>
-                    <label className="block mb-1">変更後</label>
+                    <label className="block mb-1">変更後(現役職名や現部署名などを入力)</label>
                     <input
                         type="text"
                         name="after_change"
