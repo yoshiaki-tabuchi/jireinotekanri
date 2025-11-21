@@ -51,22 +51,43 @@ export default function PersonalNoticeNewPage() {
         1: "新卒入社",
         2: "中途入社",
         3: "昇格",
-        4: "異動",
-        5: "転勤",
-        6: "駐在",
-        7: "社員→契約",
-        8: "契約→社員",
-        9: "降格",
+        4: "降格",
+        5: "異動",
+        6: "転勤",
+        7: "駐在",
+        8: "社員→契約",
+        9: "契約→社員",
     };
 
     // ★ 追加：種類に応じた placeholder を返す
+
+    const getBeforePlaceholder = () => {
+        switch (formData.category) {
+            case "1": // 新卒入社
+                return "入力不要"
+
+            case "3": // 昇格
+            case "4": // 降格
+                return "例：)前役職名";
+
+            default:
+                return "";
+        }
+    };
+
     const getAfterPlaceholder = () => {
         switch (formData.category) {
             case "1": // 新卒入社
             case "2": // 中途入社
                 return "例：)所属部署";
             case "3": // 昇格
+            case "4": // 降格
                 return "例：)新役職名";
+
+            case "6": // 昇格
+            case "7": // 降格
+                return "例：)所属部署";
+
             default:
                 return "";
         }
@@ -110,6 +131,7 @@ export default function PersonalNoticeNewPage() {
                         value={formData.name}
                         onChange={handleChange}
                         className="border rounded w-full p-2"
+                        placeholder="姓と名の間に半角スペースを入れてください"
                         required
                     />
                 </div>
@@ -139,6 +161,8 @@ export default function PersonalNoticeNewPage() {
                         name="before_change"
                         value={formData.before_change}
                         onChange={handleChange}
+                        placeholder={getBeforePlaceholder()}  // ★ この行追加
+
                         className="border rounded w-full p-2"
                     />
                 </div>

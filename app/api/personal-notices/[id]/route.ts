@@ -69,6 +69,7 @@ export async function PATCH(req: NextRequest, context: any) {
                 last_updated: new Date(),
             },
         });
+
         console.log("Updated notice:", updatedNotice);
         return NextResponse.json(updatedNotice);
     } catch (err: any) {

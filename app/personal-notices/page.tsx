@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useSearchParams, useRouter } from "next/navigation";
 
 
 export default function PersonalNoticePage() {
@@ -19,11 +19,20 @@ export default function PersonalNoticePage() {
         show_deleted: false,
     });
     const [data, setData] = useState([]);
-    const [page, setPage] = useState(1);
     const perPage = 20;
     const [totalPages, setTotalPages] = useState(1);
+    const searchParams = useSearchParams();
+    const currentPage = Number(searchParams.get("page") || 1);
 
-    const fetchData = async (pageNum = 1) => {
+    // ページ番号の初期化
+    const savedPage = localStorage.getItem("personalNoticePage");
+    const [page, setPage] = useState(savedPage ? Number(savedPage) : 1);
+
+    // データ取得
+    const fetchData = async (pageNum: number) => {
+        setPage(pageNum);
+        localStorage.setItem("personalNoticePage", pageNum.toString()); // ページ番号を保存
+
         const query = new URLSearchParams(
             Object.fromEntries(
                 Object.entries({ ...filters, page: pageNum.toString(), per_page: perPage })
@@ -35,13 +44,13 @@ export default function PersonalNoticePage() {
         const json = await res.json();
         setData(json.data);
         setTotalPages(json.pagination.totalPages);
-        setPage(json.pagination.page);
     };
 
 
-
     useEffect(() => {
-        fetchData();
+        const savedPage = localStorage.getItem("personalNoticePage");
+        const initialPage = savedPage ? Number(savedPage) : 1;
+        fetchData(initialPage);
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -82,12 +91,12 @@ export default function PersonalNoticePage() {
         1: '新卒入社',
         2: '中途入社',
         3: '昇格',
-        4: '異動',
-        5: '転勤',
-        6: '駐在',
-        7: '社員→契約',
-        8: '契約→社員',
-        9: '降格',
+        4: '降格',
+        5: '異動',
+        6: '転勤',
+        7: '駐在',
+        8: '社員→契約',
+        9: '契約→社員',
     };
 
     return (
@@ -236,32 +245,45 @@ export default function PersonalNoticePage() {
             </div>
 
 
-            <div className="flex justify-center mt-4 space-x-2">
+            <div className="flex justify-center mt-6 space-x-1">
+                {/* 前へボタン */}
                 <button
-                    disabled={page <= 1}
                     onClick={() => fetchData(page - 1)}
-                    className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                    disabled={page <= 1}
+                    className={`px-3 py-1 rounded-md border transition-colors ${page <= 1
+                            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                            : "bg-white text-gray-700 hover:bg-blue-100"
+                        }`}
                 >
                     前へ
                 </button>
+
+                {/* ページ番号 */}
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                     <button
                         key={p}
                         onClick={() => fetchData(p)}
-                        className={`px-3 py-1 rounded ${p === page ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"}`}
+                        className={`px-3 py-1 rounded-md border transition-colors ${p === page
+                                ? "bg-blue-500 text-white border-blue-500"
+                                : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                            }`}
                     >
                         {p}
                     </button>
                 ))}
+
+                {/* 次へボタン */}
                 <button
-                    disabled={page >= totalPages}
                     onClick={() => fetchData(page + 1)}
-                    className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                    disabled={page >= totalPages}
+                    className={`px-3 py-1 rounded-md border transition-colors ${page >= totalPages
+                            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                            : "bg-white text-gray-700 hover:bg-blue-100"
+                        }`}
                 >
                     次へ
                 </button>
             </div>
-
             <table className="table-fixed w-full mt-4 border-collapse border border-gray-300">
                 <colgroup>
                     <col className="w-12" />  {/* ID */}
@@ -314,20 +336,17 @@ export default function PersonalNoticePage() {
                                 </button>
                             </td>
 
-                            {/* 削除ボタン / 削除済み表示 */}
+                            {/* 削除ボタン */}
                             <td className="text-center">
-                                {n.delete_flag ? (
-                                    <span className="text-gray-500 font-medium">削除済み</span>
-                                ) : (
-                                    <button
-                                        onClick={() => handleDelete(n.id)}
-                                        className="border text-red-500 hover:text-red-700 cursor-pointer p-1 w-6"
-                                        title="削除"
-                                    >
-                                        <FontAwesomeIcon icon={faTrash} />
-                                    </button>
-                                )}
+                                <button
+                                    onClick={() => handleDelete(n.id)}
+                                    className="border text-red-500 hover:text-red-700 cursor-pointer p-1 w-6"
+                                    title="削除"
+                                >
+                                    <FontAwesomeIcon icon={faTrash} />
+                                </button>
                             </td>
+
 
                         </tr>
                     ))}

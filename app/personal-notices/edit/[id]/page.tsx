@@ -99,12 +99,12 @@ export default function EditPage() {
                         <option value="1">新卒入社</option>
                         <option value="2">中途入社</option>
                         <option value="3">昇格</option>
-                        <option value="4">異動</option>
-                        <option value="5">転勤</option>
-                        <option value="6">駐在</option>
-                        <option value="7">社員→契約</option>
-                        <option value="8">契約→社員</option>
-                        <option value="9">降格</option>
+                        <option value="4">降格</option>
+                        <option value="5">異動</option>
+                        <option value="6">転勤</option>
+                        <option value="7">駐在</option>
+                        <option value="8">社員→契約</option>
+                        <option value="9">契約→社員</option>
                     </select>
                 </div>
                 <div>
