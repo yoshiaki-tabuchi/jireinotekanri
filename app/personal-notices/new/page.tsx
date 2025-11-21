@@ -56,6 +56,7 @@ export default function PersonalNoticeNewPage() {
         6: "駐在",
         7: "社員→契約",
         8: "契約→社員",
+        9: "降格",
     };
 
     // ★ 追加：種類に応じた placeholder を返す

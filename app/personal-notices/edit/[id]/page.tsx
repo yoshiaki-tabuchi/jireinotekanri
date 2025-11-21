@@ -104,6 +104,7 @@ export default function EditPage() {
                         <option value="6">駐在</option>
                         <option value="7">社員→契約</option>
                         <option value="8">契約→社員</option>
+                        <option value="9">降格</option>
                     </select>
                 </div>
                 <div>

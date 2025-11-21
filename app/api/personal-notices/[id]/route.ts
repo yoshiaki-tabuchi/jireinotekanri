@@ -53,13 +53,22 @@ export async function PATCH(req: NextRequest, context: any) {
         console.log("Request body:", body);
 
         const updatedNotice = await prisma.personalNotice.update({
-            where: { id },
+            where: {
+                id: Number(id),
+            },
             data: {
-                ...body,
-                last_updated: new Date()
-            }, // ←ここで更新日時を設定
+                date: new Date(body.date),
+                employee_id: body.employee_id,
+                name: body.name,
+                category: Number(body.category), // ← ここ重要！
+                before_change: body.before_change,
+                after_change: body.after_change,
+                note: body.note,
+                delete_flag: Boolean(body.delete_flag),
+                registration_date: new Date(body.registration_date),
+                last_updated: new Date(),
+            },
         });
-
         console.log("Updated notice:", updatedNotice);
         return NextResponse.json(updatedNotice);
     } catch (err: any) {

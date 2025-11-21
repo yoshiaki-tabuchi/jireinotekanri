@@ -87,6 +87,7 @@ export default function PersonalNoticePage() {
         6: '駐在',
         7: '社員→契約',
         8: '契約→社員',
+        9: '降格',
     };
 
     return (
