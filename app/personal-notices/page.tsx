@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 export default function PersonalNoticePage() {
@@ -21,17 +21,18 @@ export default function PersonalNoticePage() {
     const [data, setData] = useState([]);
     const perPage = 20;
     const [totalPages, setTotalPages] = useState(1);
-    const searchParams = useSearchParams();
-    const currentPage = Number(searchParams.get("page") || 1);
 
     // ページ番号の初期化
-    const savedPage = localStorage.getItem("personalNoticePage");
-    const [page, setPage] = useState(savedPage ? Number(savedPage) : 1);
+    const [page, setPage] = useState(1); // 初期値は 1
 
     // データ取得
-    const fetchData = async (pageNum: number) => {
+    const fetchData = async (pageNum: number = page) => {
         setPage(pageNum);
-        localStorage.setItem("personalNoticePage", pageNum.toString()); // ページ番号を保存
+
+        // window が存在する場合のみ localStorage に保存
+        if (typeof window !== "undefined") {
+            localStorage.setItem("personalNoticePage", pageNum.toString());
+        }
 
         const query = new URLSearchParams(
             Object.fromEntries(
@@ -46,12 +47,16 @@ export default function PersonalNoticePage() {
         setTotalPages(json.pagination.totalPages);
     };
 
-
     useEffect(() => {
+        // マウント後にのみ localStorage を参照
+        const pageParam = new URLSearchParams(window.location.search).get("page");
         const savedPage = localStorage.getItem("personalNoticePage");
-        const initialPage = savedPage ? Number(savedPage) : 1;
+        const initialPage = pageParam ? Number(pageParam) : savedPage ? Number(savedPage) : 1;
+        setPage(initialPage);
+
         fetchData(initialPage);
     }, []);
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -251,8 +256,8 @@ export default function PersonalNoticePage() {
                     onClick={() => fetchData(page - 1)}
                     disabled={page <= 1}
                     className={`px-3 py-1 rounded-md border transition-colors ${page <= 1
-                            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                            : "bg-white text-gray-700 hover:bg-blue-100"
+                        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                        : "bg-white text-gray-700 hover:bg-blue-100"
                         }`}
                 >
                     前へ
@@ -264,8 +269,8 @@ export default function PersonalNoticePage() {
                         key={p}
                         onClick={() => fetchData(p)}
                         className={`px-3 py-1 rounded-md border transition-colors ${p === page
-                                ? "bg-blue-500 text-white border-blue-500"
-                                : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
+                            ? "bg-blue-500 text-white border-blue-500"
+                            : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
                             }`}
                     >
                         {p}
@@ -277,8 +282,8 @@ export default function PersonalNoticePage() {
                     onClick={() => fetchData(page + 1)}
                     disabled={page >= totalPages}
                     className={`px-3 py-1 rounded-md border transition-colors ${page >= totalPages
-                            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                            : "bg-white text-gray-700 hover:bg-blue-100"
+                        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                        : "bg-white text-gray-700 hover:bg-blue-100"
                         }`}
                 >
                     次へ
