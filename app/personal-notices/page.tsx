@@ -36,8 +36,8 @@ export default function PersonalNoticePage() {
         column: SortColumn;
         order: "asc" | "desc";
     }>({
-        column: "id",
-        order: "asc",
+        column: "date",
+        order: "desc",
     });
 
 
@@ -63,6 +63,7 @@ export default function PersonalNoticePage() {
                     sort_by: sortParam.column,
                     sort_order: sortParam.order,
                 }).filter(([_, v]) => v !== "" && v !== false)
+                    .map(([k, v]) => [k, String(v)])
             )
         );
 
@@ -342,19 +343,7 @@ export default function PersonalNoticePage() {
 
                 <thead className="bg-blue-100">
                     <tr>
-                        <th
-                            className="border p-2 text-center cursor-pointer hover:bg-blue-200"
-                            onClick={() => handleSort("id")}
-                        >
-                            <div className="flex items-center justify-center gap-1">
-                                ID
-                                {sort.column === "id" && (
-                                    <span className="text-xs">
-                                        {sort.order === "asc" ? "▲" : "▼"}
-                                    </span>
-                                )}
-                            </div>
-                        </th>
+                        <th className="border p-1 w-6 text-center">No</th>
                         <th
                             className="border p-2 text-center cursor-pointer hover:bg-blue-200"
                             onClick={() => handleSort("date")}
@@ -455,9 +444,9 @@ export default function PersonalNoticePage() {
                 </thead>
 
                 <tbody>
-                    {data.map((n: any) => (
+                    {data.map((n: any, index: number) => (
                         <tr key={n.id} className="border hover:bg-gray-50">
-                            <td className="border p-2 text-center">{n.id}</td>
+                            <td className="border p-2 text-center">{(page - 1) * perPage + index + 1}</td>
                             <td className="border p-2 text-center">{n.date?.slice(0, 10)}</td>
                             <td className="border p-2 text-center">{n.employee_id.toString().padStart(4, "0")}</td>
                             <td className="border p-2 text-left">{n.name}</td>

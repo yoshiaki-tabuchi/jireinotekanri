@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
+import { Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -28,8 +29,8 @@ export async function GET(req: Request) {
         const parsed = schema.parse(filters);
 
         console.log("sort_order:", parsed.sort_order);
-        const sortBy = parsed.sort_by ?? "id";
-        const sortOrder = parsed.sort_order === "asc" ? "asc" : "desc";
+        const sortBy = parsed.sort_by ?? "date";
+        const sortOrder: "asc" | "desc" = parsed.sort_order === "asc" ? "asc" : "desc";
         const where: any = {};
         if (!parsed.show_deleted) where.delete_flag = false;
         if (parsed.date) where.date = new Date(parsed.date);
@@ -45,13 +46,18 @@ export async function GET(req: Request) {
 
         const total = await prisma.personalNotice.count({ where });
 
-        const orderBy =
-            sortBy === "id"
-                ? { id: sortOrder }
-                : [
-                    { [sortBy]: sortOrder },
-                    { id: "asc" },
-                ];
+        let orderBy: Prisma.PersonalNoticeOrderByWithRelationInput[];
+
+        if (sortBy === "date") {
+            // 日付でソートする場合は単独
+            orderBy = [{ date: sortOrder }];
+        } else {
+            // それ以外は「指定カラム → 日付 desc」
+            orderBy = [
+                { [sortBy]: sortOrder } as Prisma.PersonalNoticeOrderByWithRelationInput,
+                { date: "desc" },
+            ];
+        }
 
         const notices = await prisma.personalNotice.findMany({
             where,
