@@ -16,6 +16,9 @@ const schema = z.object({
     show_deleted: z.string().optional(),
     page: z.string().optional(), // 追加
     per_page: z.string().optional(), // 追加
+    sort_order: z.enum(["asc", "desc"]).optional(),
+    sort_by: z.string().optional(),
+
 });
 
 export async function GET(req: Request) {
@@ -24,6 +27,9 @@ export async function GET(req: Request) {
         const filters = Object.fromEntries(searchParams.entries());
         const parsed = schema.parse(filters);
 
+        console.log("sort_order:", parsed.sort_order);
+        const sortBy = parsed.sort_by ?? "id";
+        const sortOrder = parsed.sort_order === "asc" ? "asc" : "desc";
         const where: any = {};
         if (!parsed.show_deleted) where.delete_flag = false;
         if (parsed.date) where.date = new Date(parsed.date);
@@ -39,9 +45,17 @@ export async function GET(req: Request) {
 
         const total = await prisma.personalNotice.count({ where });
 
+        const orderBy =
+            sortBy === "id"
+                ? { id: sortOrder }
+                : [
+                    { [sortBy]: sortOrder },
+                    { id: "asc" },
+                ];
+
         const notices = await prisma.personalNotice.findMany({
             where,
-            orderBy: { date: "desc" },
+            orderBy,
             skip: (page - 1) * perPage,
             take: perPage,
         });

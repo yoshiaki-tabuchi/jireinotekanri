@@ -22,41 +22,69 @@ export default function PersonalNoticePage() {
     const perPage = 20;
     const [totalPages, setTotalPages] = useState(1);
 
+    type SortColumn =
+        | "id"
+        | "date"
+        | "employee_id"
+        | "name"
+        | "category"
+        | "before_change"
+        | "after_change"
+        | "note";
+
+    const [sort, setSort] = useState<{
+        column: SortColumn;
+        order: "asc" | "desc";
+    }>({
+        column: "id",
+        order: "asc",
+    });
+
+
     // ページ番号の初期化
     const [page, setPage] = useState(1); // 初期値は 1
 
-    // データ取得
-    const fetchData = async (pageNum: number = page) => {
+    const fetchData = async (
+        pageNum: number = page,
+        sortParam = sort
+    ) => {
         setPage(pageNum);
 
-        // window が存在する場合のみ localStorage に保存
         if (typeof window !== "undefined") {
             localStorage.setItem("personalNoticePage", pageNum.toString());
         }
 
         const query = new URLSearchParams(
             Object.fromEntries(
-                Object.entries({ ...filters, page: pageNum.toString(), per_page: perPage })
-                    .filter(([_, v]) => v)
-            ) as Record<string, string>
+                Object.entries({
+                    ...filters,
+                    page: pageNum.toString(),
+                    per_page: perPage.toString(),
+                    sort_by: sortParam.column,
+                    sort_order: sortParam.order,
+                }).filter(([_, v]) => v !== "" && v !== false)
+            )
         );
 
-        const res = await fetch(`/api/personal-notices?${query}`);
+        const res = await fetch(`/api/personal-notices?${query.toString()}`);
         const json = await res.json();
-        setData(json.data);
-        setTotalPages(json.pagination.totalPages);
+
+        setData(json.data ?? []);
+        setTotalPages(json.pagination?.totalPages ?? 1);
     };
 
     useEffect(() => {
-        // マウント後にのみ localStorage を参照
         const pageParam = new URLSearchParams(window.location.search).get("page");
         const savedPage = localStorage.getItem("personalNoticePage");
-        const initialPage = pageParam ? Number(pageParam) : savedPage ? Number(savedPage) : 1;
-        setPage(initialPage);
+        const initialPage = pageParam
+            ? Number(pageParam)
+            : savedPage
+                ? Number(savedPage)
+                : 1;
 
+        setPage(initialPage);
         fetchData(initialPage);
     }, []);
-
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -91,7 +119,18 @@ export default function PersonalNoticePage() {
         }
     };
 
+    const handleSort = (column: SortColumn) => {
+        setSort(prev => {
 
+            const next: { column: SortColumn; order: "asc" | "desc" } =
+                prev.column === column
+                    ? { column, order: prev.order === "asc" ? "desc" : "asc" }
+                    : { column, order: "asc" };
+
+            fetchData(1, next); // ← 確定した値でAPI呼び出し
+            return next;
+        });
+    };
     const kinds: Record<number, string> = {
         1: '新卒入社',
         2: '中途入社',
@@ -291,26 +330,123 @@ export default function PersonalNoticePage() {
             </div>
             <table className="table-fixed w-full mt-4 border-collapse border border-gray-300">
                 <colgroup>
-                    <col className="w-12" />  {/* ID */}
-                    <col className="w-32" />  {/* 日付 */}
-                    <col className="w-24" />  {/* 社員番号 */}
-                    <col className="w-32" />  {/* 氏名 */}
-                    <col className="w-32" />  {/* 種類 */}
-                    <col className="w-40" />  {/* 変更前 */}
-                    <col className="w-40" />  {/* 変更後 */}
-                    <col className="w-64" />  {/* 備考 */}
+                    <col className="w-12" />
+                    <col className="w-32" />
+                    <col className="w-24" />
+                    <col className="w-32" />
+                    <col className="w-32" />
+                    <col className="w-40" />
+                    <col className="w-40" />
+                    <col className="w-64" />
                 </colgroup>
 
                 <thead className="bg-blue-100">
                     <tr>
-                        <th className="border p-2 text-center">ID</th>
-                        <th className="border p-2 text-center">日付</th>
-                        <th className="border p-2 text-center">社員番号</th>
-                        <th className="border p-2 text-left">氏名</th>
-                        <th className="border p-2 text-left">種類</th>
-                        <th className="border p-2 text-left">変更前</th>
-                        <th className="border p-2 text-left">変更後</th>
-                        <th className="border p-2 text-left">備考</th>
+                        <th
+                            className="border p-2 text-center cursor-pointer hover:bg-blue-200"
+                            onClick={() => handleSort("id")}
+                        >
+                            <div className="flex items-center justify-center gap-1">
+                                ID
+                                {sort.column === "id" && (
+                                    <span className="text-xs">
+                                        {sort.order === "asc" ? "▲" : "▼"}
+                                    </span>
+                                )}
+                            </div>
+                        </th>
+                        <th
+                            className="border p-2 text-center cursor-pointer hover:bg-blue-200"
+                            onClick={() => handleSort("date")}
+                        >
+                            <div className="flex items-center justify-center gap-1">
+                                日付
+                                {sort.column === "date" && (
+                                    <span className="text-xs">
+                                        {sort.order === "asc" ? "▲" : "▼"}
+                                    </span>
+                                )}
+                            </div>
+                        </th>
+                        <th
+                            className="border p-2 text-center cursor-pointer hover:bg-blue-200"
+                            onClick={() => handleSort("employee_id")}
+                        >
+                            <div className="flex items-center justify-center gap-1">
+                                社員番号
+                                {sort.column === "employee_id" && (
+                                    <span className="text-xs">
+                                        {sort.order === "asc" ? "▲" : "▼"}
+                                    </span>
+                                )}
+                            </div>
+                        </th>
+
+                        <th
+                            className="border p-2 text-left cursor-pointer hover:bg-blue-200"
+                            onClick={() => handleSort("name")}
+                        >
+                            <div className="flex items-center gap-1">
+                                氏名
+                                {sort.column === "name" && (
+                                    <span className="text-xs">
+                                        {sort.order === "asc" ? "▲" : "▼"}
+                                    </span>
+                                )}
+                            </div>
+                        </th>
+                        <th
+                            className="border p-2 text-left cursor-pointer hover:bg-blue-200"
+                            onClick={() => handleSort("category")}
+                        >
+                            <div className="flex items-center gap-1">
+                                種類
+                                {sort.column === "category" && (
+                                    <span className="text-xs">
+                                        {sort.order === "asc" ? "▲" : "▼"}
+                                    </span>
+                                )}
+                            </div>
+                        </th>
+                        <th
+                            className="border p-2 text-left cursor-pointer hover:bg-blue-200"
+                            onClick={() => handleSort("before_change")}
+                        >
+                            <div className="flex items-center gap-1">
+                                変更前
+                                {sort.column === "before_change" && (
+                                    <span className="text-xs">
+                                        {sort.order === "asc" ? "▲" : "▼"}
+                                    </span>
+                                )}
+                            </div>
+                        </th>
+                        <th
+                            className="border p-2 text-left cursor-pointer hover:bg-blue-200"
+                            onClick={() => handleSort("after_change")}
+                        >
+                            <div className="flex items-center gap-1">
+                                変更後
+                                {sort.column === "after_change" && (
+                                    <span className="text-xs">
+                                        {sort.order === "asc" ? "▲" : "▼"}
+                                    </span>
+                                )}
+                            </div>
+                        </th>
+                        <th
+                            className="border p-2 text-left cursor-pointer hover:bg-blue-200"
+                            onClick={() => handleSort("note")}
+                        >
+                            <div className="flex items-center gap-1">
+                                備考
+                                {sort.column === "note" && (
+                                    <span className="text-xs">
+                                        {sort.order === "asc" ? "▲" : "▼"}
+                                    </span>
+                                )}
+                            </div>
+                        </th>
                         <th className="border p-1 w-6 text-left">編集</th>
                         <th className="border p-1 w-6 text-left">削除</th>
 
