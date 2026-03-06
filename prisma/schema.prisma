@@ -28,3 +28,107 @@ model PersonalNotice {
   registration_date DateTime
   last_updated    DateTime
 }
+
+model Post {
+  id         BigInt     @id @default(autoincrement())
+  post_id    String     @db.VarChar(4)
+  post_name  String     @db.VarChar(20)
+  status     Boolean    @default(false)
+  note       String?    @db.VarChar(500)
+  created_at DateTime?  @db.Timestamp(6)
+  updated_at DateTime?  @db.Timestamp(6)
+}
+
+model Affiliation {
+  id                    BigInt     @id @default(autoincrement())
+  affiliation_id        String     @db.VarChar(4)
+  affiliation_name      String     @db.VarChar(20)
+  department_name       String?    @db.VarChar(20)
+  division_name         String?    @db.VarChar(20)
+  person_in_charge_name String?    @db.VarChar(20)
+  status                Boolean    @default(false)
+  note                  String?    @db.VarChar(500)
+  created_at            DateTime?  @db.Timestamp(6)
+  updated_at            DateTime?  @db.Timestamp(6)
+}
+
+model Employee {
+  id                 BigInt     @id @default(autoincrement())
+  employee_id        String     @db.VarChar(4)
+  employee_name      String     @db.VarChar(20)
+  employee_kana      String?    @db.VarChar(20)
+  gender             Boolean    @default(false)
+  birthday           DateTime?  @db.Date
+  registration_date  DateTime?  @db.Date
+  Author             String?    @db.VarChar(20)
+  last_updated       DateTime?  @db.Date
+  last_author        String?    @db.VarChar(20)
+  delete_flag        Boolean    @default(false)
+  created_at         DateTime?  @db.Timestamp(6)
+  updated_at         DateTime?  @db.Timestamp(6)
+  employee_note      String?    @db.VarChar(500)
+}
+
+model EmployeeInfoCP {
+  id                        BigInt     @id @default(autoincrement())
+  employee_id               String     @db.VarChar(4)
+  joiningDay                DateTime   @db.Date
+  retireDay                 DateTime?  @db.Date
+  Fixed_term_classification Boolean    @default(false)
+  mailaddress_company       String     @db.VarChar(40)
+  phonenumber_company       String     @db.VarChar(40)
+  phonemail_company         String     @db.VarChar(40)
+  groupmail_company         Boolean    @default(false)
+  position_id1              String     @db.VarChar(2)
+  affiliation_code1         String     @db.VarChar(4)
+  position_id2              String?    @db.VarChar(2)
+  affiliation_code2         String?    @db.VarChar(4)
+  position_id3              String?    @db.VarChar(2)
+  affiliation_code3         String?    @db.VarChar(4)
+  company_note              String?    @db.VarChar(500)
+  created_at                DateTime?  @db.Timestamp(6)
+  updated_at                DateTime?  @db.Timestamp(6)
+}
+
+model EmployeeInfoIN {
+  id               BigInt     @id @default(autoincrement())
+  employee_id      String     @db.VarChar(4)
+  post_code1       String     @db.VarChar(20)
+  address1_1       String     @db.VarChar(40)
+  address1_2       String     @db.VarChar(40)
+  post_code2       String?    @db.VarChar(20)
+  address2_1       String?    @db.VarChar(40)
+  address2_2       String?    @db.VarChar(40)
+  phoneNumber      String?    @db.VarChar(20)
+  phoneNumber_ind  String?    @db.VarChar(20)
+  mailaddress_ind  String?    @db.VarChar(40)
+  ind_note         String?    @db.VarChar(500)
+  created_at       DateTime?  @db.Timestamp(6)
+  updated_at       DateTime?  @db.Timestamp(6)
+}
+
+model MobilePhone {
+  id                BigInt     @id @default(autoincrement())
+  IMEI              String?    @db.Text
+  career            String     @db.VarChar(20)
+  model             Boolean
+  color             String?    @db.VarChar(20)
+  plan              String?    @db.VarChar(40)
+  phoneNumber       String     @db.VarChar(20)
+  phonemailaddress  String?    @db.VarChar(40)
+  contractyearmonth DateTime   @db.Date
+  contractterm      Int
+  employee_id1      String?    @db.VarChar(4)
+  lonedate1         DateTime?  @db.Date
+  returndate1       DateTime?  @db.Date
+  employee_id2      String?    @db.VarChar(4)
+  lonedate2         DateTime?  @db.Date
+  returndate2       DateTime?  @db.Date
+  employee_id3      String?    @db.VarChar(4)
+  lonedate3         DateTime?  @db.Date
+  returndate3       DateTime?  @db.Date
+  status            Int
+  phone_note        String?    @db.VarChar(500)
+  created_at        DateTime?  @db.Timestamp(6)
+  updated_at        DateTime?  @db.Timestamp(6)
+}

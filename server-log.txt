@@ -1,0 +1,291 @@
+===================================== 
+Starting server 2026/03/02 15:44:25.61 
+===================================== 
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::3000)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ 
+===================================== 
+Server crashed 2026/03/02 15:44:25.94 
+===================================== 
+ 
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::3000)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ 
+===================================== 
+Server crashed 2026/03/02 15:44:30.39 
+===================================== 
+ 
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::3000)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ 
+===================================== 
+Server crashed 2026/03/02 15:44:35.40 
+===================================== 
+ 
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::3000)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ 
+===================================== 
+Server crashed 2026/03/02 15:44:37.16 
+===================================== 
+ 
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::3000)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ 
+===================================== 
+Server crashed 2026/03/02 15:44:42.34 
+===================================== 
+ 
+===================================== 
+Starting server 2026/03/02 15:45:57.67 
+===================================== 
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::3000)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ 
+===================================== 
+Server crashed 2026/03/02 15:45:57.92 
+===================================== 
+ 
+===================================== 
+Starting server 2026/03/02 15:49:34.21 
+===================================== 
+   ▲ Next.js 16.0.1
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.129.35:3001
+
+ ✓ Starting...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ ✓ Ready in 583ms
+sort_order: desc
+sort_order: desc
+Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.personalNotice.create()` invocation:
+
+
+Unique constraint failed on the fields: (`id`)
+    at ignore-listed frames {
+  code: 'P2002',
+  meta: [Object],
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.personalNotice.create()` invocation:
+
+
+Unique constraint failed on the fields: (`id`)
+    at ignore-listed frames {
+  code: 'P2002',
+  meta: [Object],
+  clientVersion: '6.19.0'
+}
+sort_order: desc
+sort_order: desc
+sort_order: desc
+sort_order: desc
+sort_order: desc
+sort_order: desc
+sort_order: asc
+sort_order: desc
+sort_order: desc
+sort_order: desc
+Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.personalNotice.create()` invocation:
+
+
+Unique constraint failed on the fields: (`id`)
+    at ignore-listed frames {
+  code: 'P2002',
+  meta: [Object],
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.personalNotice.create()` invocation:
+
+
+Unique constraint failed on the fields: (`id`)
+    at ignore-listed frames {
+  code: 'P2002',
+  meta: [Object],
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.personalNotice.create()` invocation:
+
+
+Unique constraint failed on the fields: (`id`)
+    at ignore-listed frames {
+  code: 'P2002',
+  meta: [Object],
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.personalNotice.create()` invocation:
+
+
+Unique constraint failed on the fields: (`id`)
+    at ignore-listed frames {
+  code: 'P2002',
+  meta: [Object],
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.personalNotice.create()` invocation:
+
+
+Unique constraint failed on the fields: (`id`)
+    at ignore-listed frames {
+  code: 'P2002',
+  meta: [Object],
+  clientVersion: '6.19.0'
+}
+sort_order: desc
+sort_order: desc
+^C===================================== 
+Starting server 2026/03/06 13:19:40.94 
+===================================== 
+   ▲ Next.js 16.0.1
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.129.35:3001
+
+ ✓ Starting...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ ✓ Ready in 392ms
+^C===================================== 
+Starting server 2026/03/06 13:21:18.02 
+===================================== 
+   ▲ Next.js 16.0.1
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.129.35:3001
+
+ ✓ Starting...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ ✓ Ready in 370ms
+sort_order: desc
+sort_order: desc
+{
+  date: 2026-04-01T00:00:00.000Z,
+  employee_id: '0215',
+  name: '雑賀　大地',
+  category: 1,
+  before_change: '',
+  after_change: '2課',
+  note: ''
+}
+sort_order: desc
+Unwrapped params: { id: '209' }
+Parsed id: 209
+DB result: {
+  id: 209,
+  date: 2026-04-01T00:00:00.000Z,
+  employee_id: '0214',
+  name: '伊佐地',
+  category: 1,
+  before_change: '',
+  after_change: '2課',
+  note: '',
+  delete_flag: false,
+  registration_date: 2026-03-06T04:18:32.565Z,
+  last_updated: 2026-03-06T04:18:32.565Z
+}
+---- PATCH /personal-notices/[id] called ----
+Unwrapped params: { id: '209' }
+Parsed id: 209
+Request body: {
+  id: 209,
+  date: '2026-04-01T00:00:00.000Z',
+  employee_id: '0214',
+  name: '伊佐地　裕貴',
+  category: 1,
+  before_change: '',
+  after_change: '2課',
+  note: '',
+  delete_flag: false,
+  registration_date: '2026-03-06T04:18:32.565Z',
+  last_updated: '2026-03-06T04:18:32.565Z'
+}
+Updated notice: {
+  id: 209,
+  date: 2026-04-01T00:00:00.000Z,
+  employee_id: '0214',
+  name: '伊佐地　裕貴',
+  category: 1,
+  before_change: '',
+  after_change: '2課',
+  note: '',
+  delete_flag: false,
+  registration_date: 2026-03-06T04:18:32.565Z,
+  last_updated: 2026-03-06T04:25:08.205Z
+}
+sort_order: desc
+{
+  date: 2026-04-01T00:00:00.000Z,
+  employee_id: '0216',
+  name: '戸谷　成児',
+  category: 1,
+  before_change: '',
+  after_change: '2課',
+  note: ''
+}
+sort_order: desc
+{
+  date: 2026-04-01T00:00:00.000Z,
+  employee_id: '0217',
+  name: '畑　知希',
+  category: 1,
+  before_change: '',
+  after_change: '2課',
+  note: ''
+}
+sort_order: desc
+sort_order: asc
+sort_order: desc
+sort_order: asc
+sort_order: desc
