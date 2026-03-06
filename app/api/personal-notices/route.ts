@@ -94,6 +94,7 @@ export async function POST(req: Request) {
 
     const today = new Date();
 
+    console.log(validated);
     const notice = await prisma.personalNotice.create({
         data: {
             ...validated,

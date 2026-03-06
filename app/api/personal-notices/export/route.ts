@@ -31,7 +31,7 @@ export async function GET(req: Request) {
         { header: "備考", key: "note", width: 30 },
     ];
 
-    data.forEach((n) => {
+    data.forEach((n: any) => {
         sheet.addRow({
             id: n.id,
             date: n.date.toISOString().slice(0, 10),
